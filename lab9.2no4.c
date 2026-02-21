@@ -114,7 +114,9 @@ int checkRule4_3(char *ps){
     for(int i=0 ;i<len;i++){
         if(ps[i] >='A' && ps[i]<='Z'){
             for(int j=i+1;j<len;j++){
-                repeat_upper = 1;
+                if(ps[i]==ps[j]){
+                    repeat_upper = 1;
+                }  
             }
         }
     }
