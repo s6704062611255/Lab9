@@ -22,20 +22,20 @@ int main(){
         printf("Incorrect login or password\n");
     }
 
-    /*if (checkValidPass(password)){
+    if (checkValidPass(password)){
         // if Password is valid
         printf("Accepted\n");
     }
     else{
         printf("Reject\n");
-    } */
+    }
 }
 int checkValidPass(char *ps)
 {
     int accepted = 0;
-    
-
-
+    if (checkRule4_1(ps) == 1 || checkRule4_2(ps) == 1 || checkRule4_3(ps) == 1){
+        accepted = 1;
+    }
     return accepted;
 }
 int checkLogin(char *login, char *passwd)
@@ -72,27 +72,55 @@ int checkRule4_1(char *ps)
 }
 
 // 4.2 Length 5-8  The first Char not a number and 2 Uppercase or more and 2 digit or more
-int checkRule4_2(char *ps){
+int checkRule4_2(char *ps)
+{
     int len = StringLen(ps), digit = 0, upper = 0, first_is_number = 0;
-    if (ps[0] >= '0' && ps[0] <= '9'){
+    if (ps[0] >= '0' && ps[0] <= '9')
+    {
         first_is_number = 1;
     }
 
-    for (int i = 0; i < len; i++){
-        if (ps[i] >= '0' && ps[i] <= '9'){
+    for (int i = 0; i < len; i++)
+    {
+        if (ps[i] >= '0' && ps[i] <= '9')
+        {
             digit++;
         }
-        if (isupper(ps[i])){
+        if (isupper(ps[i]))
+        {
             upper++;
         }
     }
 
-    if (len >= 5 &&len <= 8 && first_is_number == 0 && upper >=2 && digit>=2){
-        return 1 ;
+    if (len >= 5 && len <= 8 && first_is_number == 0 && upper >= 2 && digit >= 2)
+    {
+        return 1;
     }
     return 0;
 }
-
+// 4.3 Length 5-8  and 2 Uppercase or more and not repeat Uppercase and 2 digit or more
 int checkRule4_3(char *ps){
+    int len = StringLen(ps), digit = 0, upper = 0,repeat_upper = 0;
+    for (int i = 0; i < len; i++){
+        if (ps[i] >= '0' && ps[i] <= '9'){
+            digit++;
+        }
+        if (isupper(ps[i]))
+        {
+            upper++;
+        }
+    }
 
+    for(int i=0 ;i<len;i++){
+        if(ps[i] >='A' && ps[i]<='Z'){
+            for(int j=i+1;j<len;j++){
+                repeat_upper = 1;
+            }
+        }
+    }
+
+    if(len>=5&&len<=8 && upper>=2 && repeat_upper == 0 && digit>=2){
+        return 1;
+    }
+    return 0;
 }
